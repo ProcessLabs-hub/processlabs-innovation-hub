@@ -1,0 +1,12 @@
+[phases.setup]
+# Используем поддерживаемую версию Node вместо снятой с поддержки 18.x
+nixPkgs = ["nodejs_20", "bun", "caddy"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["bun run build"]
+
+[start]
+cmd = "exec caddy run --config /assets/Caddyfile --adapter caddyfile 2>&1"
