@@ -4,9 +4,9 @@
 FROM oven/bun:1.1.30-alpine AS build
 WORKDIR /app
 
-# Устанавливаем зависимости (используем bun.lockb)
+# Устанавливаем зависимости (bun сам подтянет bun.lockb); без --frozen-lockfile, чтобы регенерировать при необходимости
 COPY bun.lockb package.json ./
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Копируем остальной код и собираем
 COPY . .
