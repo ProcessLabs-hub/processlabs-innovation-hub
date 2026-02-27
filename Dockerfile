@@ -19,5 +19,8 @@ WORKDIR /usr/share/nginx/html
 # Копируем собранный фронт
 COPY --from=build /app/dist ./
 
-EXPOSE 80
+# Перенастраиваем nginx на порт 3000 (так как Dokploy ожидает 3000)
+RUN sed -i 's/80/3000/g' /etc/nginx/conf.d/default.conf
+
+EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
