@@ -1,26 +1,23 @@
-# Простая production-сборка без Nixpacks и без Caddy.
-# Traefik в Dokploy будет проксировать на опубликованный порт 4173.
+# Статичная сборка через bun, финальный образ на nginx.
 
-FROM node:20-alpine AS build
+### Этап сборки
+FROM oven/bun:1.1.30-alpine AS build
 WORKDIR /app
 
-# Устанавливаем зависимости
-COPY package.json package-lock.json ./
-RUN npm ci
+# Устанавливаем зависимости (используем bun.lockb)
+COPY bun.lockb package.json ./
+RUN bun install --frozen-lockfile
 
-# Копируем исходники и собираем
+# Копируем остальной код и собираем
 COPY . .
-RUN npm run build
+RUN bun run build
 
-# Продакшн-слой: минимальный образ только со статикой и http-server
-FROM node:20-alpine
-WORKDIR /app
+### Рантайм
+FROM nginx:1.27-alpine
+WORKDIR /usr/share/nginx/html
 
-# Устанавливаем простой статик-сервер
-RUN npm install -g http-server
+# Копируем собранный фронт
+COPY --from=build /app/dist ./
 
-# Копируем собранный билд
-COPY --from=build /app/dist ./dist
-
-EXPOSE 4173
-CMD ["http-server", "dist", "-p", "4173", "-a", "0.0.0.0"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
