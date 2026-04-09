@@ -1,115 +1,68 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
+import { Badge } from "../ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import SectionHeader from "../shared/SectionHeader";
+import { faqs } from "@/content/landing";
 
 const FAQSection = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  const faqs = [
-    {
-      question: "В чем отличие от обычного агентства?",
-      answer: "Мы не используем готовые решения. Каждый проект — это исследование с созданием уникального решения под ваши задачи. Применяем научные методы: формулируем гипотезы, проводим эксперименты, тестируем результаты."
-    },
-    {
-      question: "Сколько времени занимает исследование?",
-      answer: "От 2 до 6 месяцев в зависимости от сложности. Мы работаем итерациями с промежуточными результатами каждые 2-3 недели. Вы видите прогресс на каждом этапе и можете корректировать направление исследования."
-    },
-    {
-      question: "Какие гарантии результата?",
-      answer: "Мы гарантируем измеримый ROI от внедрения. Все решения тестируются на реальных данных с применением A/B тестирования. Если KPI не достигнуты — дорабатываем бесплатно или возвращаем деньги."
-    },
-    {
-      question: "Работаете ли с малым бизнесом?",
-      answer: "Мы фокусируемся на средних и крупных компаниях от 100 сотрудников с бюджетом от 200,000 ₽. Для малого бизнеса исследовательский подход может быть избыточным — рекомендуем готовые решения."
-    },
-    {
-      question: "Предоставляете ли техподдержку?",
-      answer: "Да, включаем 6 месяцев поддержки и обучения команды клиента. Также предоставляем полную документацию, техническое описание и возможность самостоятельного развития решения."
-    },
-    {
-      question: "Можете ли интегрироваться с нашими системами?",
-      answer: "Да, мы специализируемся на enterprise интеграциях. Работаем с любыми API, базами данных и legacy системами. Создаем решения, которые легко встраиваются в существующую IT-архитектуру."
-    },
-    {
-      question: "Что происходит с интеллектуальной собственностью?",
-      answer: "Весь код и алгоритмы передаются заказчику. Мы подписываем NDA и гарантируем конфиденциальность. Исключительные права на разработанное решение принадлежат вам."
+  const scrollToContact = () => {
+    const element = document.getElementById("contact");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  ];
-
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
     <section className="py-20 bg-gradient-lab">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Часто задаваемые вопросы
-          </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Ответы на основные вопросы о нашем исследовательском подходе
-          </p>
-        </div>
+        <SectionHeader
+          badge="FAQ"
+          title="Часто задаваемые вопросы"
+          description="Ответы на основные вопросы о нашем исследовательском подходе"
+        />
 
-        <div className="max-w-4xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index}
-              className="bg-card rounded-xl shadow-lab-sm hover:shadow-lab-md transition-all duration-300"
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-muted/50 rounded-xl transition-colors"
-              >
-                <h3 className="text-lg font-semibold text-primary pr-4">
-                  {faq.question}
-                </h3>
-                <div className="flex-shrink-0">
-                  {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5 text-accent" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-text-muted" />
-                  )}
-                </div>
-              </button>
-              
-              {openIndex === index && (
-                <div className="px-6 pb-6 animate-fade-in">
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-text-secondary leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <Card className="mx-auto max-w-4xl shadow-lab-md">
+          <CardContent className="p-2 sm:p-4">
+            <Accordion type="single" collapsible defaultValue="item-0">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="px-4">
+                  <AccordionTrigger className="text-left text-base text-primary hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base leading-relaxed text-text-secondary">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </CardContent>
+        </Card>
 
-        {/* Additional Info */}
         <div className="mt-16 text-center">
-          <div className="bg-card rounded-2xl shadow-lab-md p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-primary mb-4">
-              Не нашли ответ?
-            </h3>
-            <p className="text-text-secondary mb-6">
-              Оставьте заявку, и мы проведем бесплатную консультацию по вашему проекту
-            </p>
-            <div className="flex items-center justify-center space-x-6 text-sm text-text-muted">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span>30 минут консультации</span>
+          <Card className="mx-auto max-w-2xl">
+            <CardHeader>
+              <CardTitle className="text-2xl text-primary">
+                Не нашли ответ?
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <p className="text-text-secondary">
+                Напишите нам, и мы разберем ваш запрос на консультации.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <Badge variant="outline">30 минут консультации</Badge>
+                <Badge variant="outline">Анализ возможностей</Badge>
+                <Badge variant="outline">Без обязательств</Badge>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                <span>Анализ возможностей</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-                <span>Без обязательств</span>
-              </div>
-            </div>
-          </div>
+              <Button onClick={scrollToContact}>Задать вопрос</Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

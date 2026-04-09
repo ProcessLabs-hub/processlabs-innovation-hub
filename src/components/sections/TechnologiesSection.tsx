@@ -1,4 +1,6 @@
 import { Database, Bot, Cloud, BarChart3, Brain, Cpu } from "lucide-react";
+import { Badge } from "../ui/badge";
+import SectionHeader from "../shared/SectionHeader";
 
 const TechnologiesSection = () => {
   const technologies = [
@@ -34,17 +36,12 @@ const TechnologiesSection = () => {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Наша лаборатория
-          </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto mb-6">
-            Современный стек технологий для создания enterprise-решений
-          </p>
-          <div className="inline-flex items-center bg-accent/10 text-accent px-4 py-2 rounded-full text-sm font-medium">
-            <span className="w-2 h-2 bg-accent rounded-full mr-2"></span>
-            Официальные партнеры amoCRM
-          </div>
+        <SectionHeader
+          title="Наша лаборатория"
+          description="Современный стек технологий для создания enterprise-решений"
+        />
+        <div className="mb-8 text-center">
+          <Badge variant="outline">Официальные партнеры amoCRM</Badge>
         </div>
 
         {/* Technologies Grid */}

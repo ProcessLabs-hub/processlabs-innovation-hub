@@ -1,9 +1,19 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { Mail, Phone, Linkedin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "../../hooks/use-toast";
+import SectionHeader from "../shared/SectionHeader";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -48,24 +58,27 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Начнем исследование
-          </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Расскажите о ваших процессах, и мы проведем предварительный анализ возможностей автоматизации
-          </p>
-        </div>
+        <SectionHeader
+          badge="Контакты"
+          title="Обсудим ваш проект"
+          description="Опишите задачу. Мы предложим формат исследования и следующий шаг."
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form */}
-          <div className="bg-card rounded-2xl shadow-lab-lg p-8">
+          <Card className="shadow-lab-md">
+            <CardHeader>
+              <CardTitle className="text-2xl text-primary">Отправить запрос</CardTitle>
+              <CardDescription>
+                Ответим в рабочее время и согласуем удобный формат разговора.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-text-primary mb-2">
+                  <Label htmlFor="name" className="mb-2 block text-text-primary">
                     Имя *
-                  </label>
+                  </Label>
                   <Input
                     id="name"
                     name="name"
@@ -76,9 +89,9 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-text-primary mb-2">
+                  <Label htmlFor="company" className="mb-2 block text-text-primary">
                     Компания *
-                  </label>
+                  </Label>
                   <Input
                     id="company"
                     name="company"
@@ -92,9 +105,9 @@ const ContactSection = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-2">
+                  <Label htmlFor="email" className="mb-2 block text-text-primary">
                     Email *
-                  </label>
+                  </Label>
                   <Input
                     id="email"
                     name="email"
@@ -106,9 +119,9 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-text-primary mb-2">
+                  <Label htmlFor="phone" className="mb-2 block text-text-primary">
                     Телефон
-                  </label>
+                  </Label>
                   <Input
                     id="phone"
                     name="phone"
@@ -121,9 +134,9 @@ const ContactSection = () => {
               </div>
 
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-text-primary mb-2">
+                <Label htmlFor="description" className="mb-2 block text-text-primary">
                   Опишите ваши процессы *
-                </label>
+                </Label>
                 <Textarea
                   id="description"
                   name="description"
@@ -139,7 +152,7 @@ const ContactSection = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg py-3 shadow-glow disabled:opacity-50"
+                className="w-full text-base py-3 disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <div className="flex items-center space-x-2">
@@ -155,8 +168,8 @@ const ContactSection = () => {
               </Button>
             </form>
 
-            {/* Contact Info */}
-            <div className="mt-8 pt-8 border-t border-border">
+            <Separator className="my-8" />
+            <div>
               <h3 className="text-lg font-semibold text-primary mb-4">Контактная информация</h3>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
@@ -173,14 +186,15 @@ const ContactSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          {/* Process Info */}
           <div className="space-y-8">
-            {/* Research Process */}
-            <div className="bg-gradient-hero rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-6">Процесс исследования</h3>
-              <div className="space-y-4">
+            <Card className="bg-gradient-hero text-white border-none">
+              <CardHeader>
+                <CardTitle className="text-2xl text-white">Процесс исследования</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="w-6 h-6 mt-1 flex-shrink-0" />
                   <div>
@@ -209,12 +223,14 @@ const ContactSection = () => {
                     <p className="text-white/80 text-sm">Разработка и тестирование решения</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
 
-            {/* Benefits */}
-            <div className="bg-card rounded-2xl shadow-lab-md p-8">
-              <h3 className="text-2xl font-bold text-primary mb-6">Что вы получите</h3>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl text-primary">Что вы получите</CardTitle>
+              </CardHeader>
+              <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
@@ -241,12 +257,14 @@ const ContactSection = () => {
                   <span className="text-text-secondary text-sm">6 месяцев поддержки</span>
                 </div>
               </div>
-            </div>
+              </CardContent>
+            </Card>
 
-            {/* Timeline */}
-            <div className="bg-gradient-lab rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-primary mb-4">Сроки ответа</h3>
-              <div className="space-y-3">
+            <Card className="bg-gradient-lab">
+              <CardHeader>
+                <CardTitle className="text-xl text-primary">Сроки ответа</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-text-secondary">Первичный ответ</span>
                   <span className="font-semibold text-primary">2 часа</span>
@@ -259,8 +277,8 @@ const ContactSection = () => {
                   <span className="text-text-secondary">Техническое предложение</span>
                   <span className="font-semibold text-primary">3-5 дней</span>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

@@ -1,17 +1,14 @@
 import { Users, Award, Code, Zap } from "lucide-react";
+import SectionHeader from "../shared/SectionHeader";
 
 const TeamSection = () => {
   return (
     <section className="py-20 bg-gradient-lab">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Команда исследователей
-          </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Эксперты в области AI/ML и промышленной автоматизации
-          </p>
-        </div>
+        <SectionHeader
+          title="Команда исследователей"
+          description="Эксперты в области AI/ML и промышленной автоматизации"
+        />
 
         {/* Main Team Member */}
         <div className="max-w-4xl mx-auto">

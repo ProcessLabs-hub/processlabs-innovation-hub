@@ -1,4 +1,5 @@
 import { TrendingUp, Clock, DollarSign, Target } from "lucide-react";
+import SectionHeader from "../shared/SectionHeader";
 
 const CasesSection = () => {
   const cases = [
@@ -31,14 +32,10 @@ const CasesSection = () => {
   return (
     <section id="cases" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Результаты наших исследований
-          </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Реальные кейсы внедрения AI-решений с измеримыми результатами
-          </p>
-        </div>
+        <SectionHeader
+          title="Результаты наших исследований"
+          description="Реальные кейсы внедрения AI-решений с измеримыми результатами"
+        />
 
         <div className="space-y-12 max-w-6xl mx-auto">
           {cases.map((caseStudy, index) => (

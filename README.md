@@ -1,73 +1,37 @@
-# Welcome to your Lovable project
+# ProcessLabs Innovation Hub
 
-## Project info
+Лендинг ProcessLabs с фокусом на системный подход к цифровым продуктам и автоматизации.
 
-**URL**: https://lovable.dev/projects/5e0525bb-77dd-42ca-a060-b553ede9ecde
+## Технологии
 
-## How can I edit this code?
+- Vite
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
 
-There are several ways of editing your application.
+## Локальный запуск
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/5e0525bb-77dd-42ca-a060-b553ede9ecde) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Проверки
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run lint
+npm run build
+```
 
-**Use GitHub Codespaces**
+## Структура
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- `src/components/sections` — секции лендинга
+- `src/components/ui` — библиотека компонентов shadcn/ui
+- `docs/audit` — результаты аудита
+- `docs/roadmap` — план этапов доработки
 
-## What technologies are used for this project?
+## Текущий статус
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/5e0525bb-77dd-42ca-a060-b553ede9ecde) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Этап 1 (интерфейс и брендбук): в работе
+- Этап 2 (интеграции и данные): запланирован

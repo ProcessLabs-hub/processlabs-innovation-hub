@@ -1,4 +1,5 @@
 import { Search, Palette, Code, Rocket, BarChart3 } from "lucide-react";
+import SectionHeader from "../shared/SectionHeader";
 
 const MethodologySection = () => {
   const steps = [
@@ -57,14 +58,10 @@ const MethodologySection = () => {
   return (
     <section id="methodology" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-            Научный подход к автоматизации
-          </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Каждый проект проходит через пять фаз исследования и разработки
-          </p>
-        </div>
+        <SectionHeader
+          title="Научный подход к автоматизации"
+          description="Каждый проект проходит через пять фаз исследования и разработки"
+        />
 
         <div className="max-w-6xl mx-auto">
           {/* Grid Layout for Desktop - 2 rows */}
