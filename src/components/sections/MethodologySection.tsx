@@ -1,63 +1,11 @@
-import { Search, Palette, Code, Rocket, BarChart3 } from "lucide-react";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
+import { methodologySteps } from "@/content/landing";
+import { methodologyIconMap } from "@/content/icon-map";
 
 const MethodologySection = () => {
-  const steps = [
-    {
-      title: "Исследование",
-      description: [
-        "Анализ процессов",
-        "Сбор данных",
-        "Выявление паттернов"
-      ],
-      icon: Search,
-      color: "accent"
-    },
-    {
-      title: "Проектирование",
-      description: [
-        "Архитектура решения",
-        "Выбор технологий",
-        "UX проектирование"
-      ],
-      icon: Palette,
-      color: "primary"
-    },
-    {
-      title: "Разработка",
-      description: [
-        "MVP разработка",
-        "Тестирование гипотез",
-        "AI/ML обучение"
-      ],
-      icon: Code,
-      color: "accent"
-    },
-    {
-      title: "Внедрение",
-      description: [
-        "Миграция процессов",
-        "Обучение команды",
-        "Настройка мониторинга"
-      ],
-      icon: Rocket,
-      color: "primary"
-    },
-    {
-      title: "Оптимизация",
-      description: [
-        "Анализ метрик",
-        "A/B тестирование",
-        "Масштабирование"
-      ],
-      icon: BarChart3,
-      color: "accent"
-    }
-  ];
-
   return (
-    <section id="methodology" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <SectionShell id="methodology" sectionClassName="bg-background">
         <SectionHeader
           title="Научный подход к автоматизации"
           description="Каждый проект проходит через пять фаз исследования и разработки"
@@ -81,8 +29,8 @@ const MethodologySection = () => {
               
               {/* First Row */}
               <div className="grid grid-cols-3 gap-8 mb-16">
-                {steps.slice(0, 3).map((step, index) => {
-                  const IconComponent = step.icon;
+                {methodologySteps.slice(0, 3).map((step, index) => {
+                  const IconComponent = methodologyIconMap[step.icon];
                   return (
                     <div key={index} className="relative z-10">
                       {/* Step Content */}
@@ -115,8 +63,8 @@ const MethodologySection = () => {
 
               {/* Second Row */}
               <div className="grid grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {steps.slice(3, 5).map((step, index) => {
-                  const IconComponent = step.icon;
+                {methodologySteps.slice(3, 5).map((step, index) => {
+                  const IconComponent = methodologyIconMap[step.icon];
                   return (
                     <div key={index} className="relative z-10">
                       {/* Step Content */}
@@ -151,12 +99,12 @@ const MethodologySection = () => {
 
           {/* Vertical Timeline for Mobile */}
           <div className="md:hidden space-y-8">
-            {steps.map((step, index) => {
-              const IconComponent = step.icon;
+            {methodologySteps.map((step, index) => {
+              const IconComponent = methodologyIconMap[step.icon];
               return (
                 <div key={index} className="relative pl-12">
                   {/* Timeline Line */}
-                  {index < steps.length - 1 && (
+                  {index < methodologySteps.length - 1 && (
                     <div className="absolute left-6 top-12 bottom-0 w-0.5 bg-border"></div>
                   )}
                   
@@ -193,8 +141,7 @@ const MethodologySection = () => {
             })}
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 

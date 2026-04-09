@@ -1,37 +1,11 @@
-import { TrendingUp, Clock, DollarSign, Target } from "lucide-react";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
+import { cases } from "@/content/landing";
+import { caseResultIconMap } from "@/content/icon-map";
 
 const CasesSection = () => {
-  const cases = [
-    {
-      company: "Крупная строительная компания",
-      industry: "Строительство инженерной инфраструктуры",
-      challenge: "Автоматизация подбора персонала",
-      solution: "AI-система полного цикла HR",
-      results: [
-        { metric: "Время подбора", change: "↓ 60%", icon: Clock, color: "text-red-500" },
-        { metric: "Качество кандидатов", change: "↑ 40%", icon: Target, color: "text-green-500" },
-        { metric: "Затраты на HR", change: "↓ 35%", icon: DollarSign, color: "text-red-500" }
-      ],
-      description: "Внедрили комплексную AI-систему для автоматизации процесса найма: от анализа резюме до предсказания успешности кандидата в компании."
-    },
-    {
-      company: "Компания по производству светопрозрачных конструкций",
-      industry: "Производство и промышленность",
-      challenge: "Анализ звонков продаж",
-      solution: "TranskriBot с NLP",
-      results: [
-        { metric: "Конверсия звонков", change: "↑ 25%", icon: TrendingUp, color: "text-green-500" },
-        { metric: "Время анализа", change: "↓ 90%", icon: Clock, color: "text-red-500" },
-        { metric: "Точность прогнозов", change: "↑ 80%", icon: Target, color: "text-green-500" }
-      ],
-      description: "Разработали AI-бота для автоматической транскрипции и анализа продажных звонков с выявлением ключевых метрик и рекомендаций."
-    }
-  ];
-
   return (
-    <section id="cases" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <SectionShell id="cases" sectionClassName="bg-background">
         <SectionHeader
           title="Результаты наших исследований"
           description="Реальные кейсы внедрения AI-решений с измеримыми результатами"
@@ -65,7 +39,7 @@ const CasesSection = () => {
                 {/* Results Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {caseStudy.results.map((result, resultIndex) => {
-                    const IconComponent = result.icon;
+                    const IconComponent = caseResultIconMap[result.icon];
                     return (
                       <div 
                         key={resultIndex}
@@ -116,8 +90,7 @@ const CasesSection = () => {
             </p>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 

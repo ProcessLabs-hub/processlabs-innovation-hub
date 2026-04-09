@@ -1,4 +1,3 @@
-import { Users, Brain, Settings, Search } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
@@ -10,16 +9,11 @@ import {
   CardTitle,
 } from "../ui/card";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
 import { services } from "@/content/landing";
+import { serviceIconMap } from "@/content/icon-map";
 
 const ServicesSection = () => {
-  const serviceIcons = {
-    users: Users,
-    brain: Brain,
-    settings: Settings,
-    search: Search,
-  } as const;
-
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
@@ -28,8 +22,7 @@ const ServicesSection = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-gradient-lab">
-      <div className="container mx-auto px-4">
+    <SectionShell id="services" sectionClassName="bg-gradient-lab">
         <SectionHeader
           badge="Направления"
           title="Лаборатории ProcessLabs"
@@ -38,7 +31,7 @@ const ServicesSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {services.map((service, index) => {
-            const IconComponent = serviceIcons[service.icon];
+            const IconComponent = serviceIconMap[service.icon];
             return (
               <Card
                 key={index}
@@ -99,8 +92,7 @@ const ServicesSection = () => {
             </CardFooter>
           </Card>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 

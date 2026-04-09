@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -7,57 +9,63 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import { Mail, Phone, Linkedin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "../../hooks/use-toast";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
+import {
+  contactBenefits,
+  contactProcessSteps,
+  contactResponseTimes,
+} from "@/content/landing";
+
+const contactFormSchema = z.object({
+  name: z.string().min(2, "Введите имя"),
+  company: z.string().min(2, "Введите название компании"),
+  email: z.string().email("Введите корректный email"),
+  phone: z.string().optional(),
+  description: z.string().min(10, "Опишите задачу подробнее"),
+});
+
+type ContactFormValues = z.infer<typeof contactFormSchema>;
+
+const defaultValues: ContactFormValues = {
+  name: "",
+  company: "",
+  email: "",
+  phone: "",
+  description: "",
+};
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    company: "",
-    email: "",
-    phone: "",
-    description: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues,
+  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Заявка отправлена!",
-        description: "Мы свяжемся с вами в течение 24 часов для обсуждения исследования.",
-      });
-      setIsSubmitting(false);
-      setFormData({
-        name: "",
-        company: "",
-        email: "",
-        phone: "",
-        description: ""
-      });
-    }, 2000);
+  const onSubmit = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    toast({
+      title: "Заявка отправлена!",
+      description: "Мы свяжемся с вами в течение 24 часов для обсуждения исследования.",
+    });
+    form.reset(defaultValues);
   };
 
   return (
-    <section id="contact" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <SectionShell id="contact" sectionClassName="bg-background">
         <SectionHeader
           badge="Контакты"
           title="Обсудим ваш проект"
@@ -73,119 +81,123 @@ const ContactSection = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name" className="mb-2 block text-text-primary">
-                    Имя *
-                  </Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="border-2 border-border focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="company" className="mb-2 block text-text-primary">
-                    Компания *
-                  </Label>
-                  <Input
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    required
-                    className="border-2 border-border focus:border-accent"
-                  />
-                </div>
-              </div>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Имя *</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="border-2 border-border focus:border-accent" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Компания *</FormLabel>
+                          <FormControl>
+                            <Input {...field} className="border-2 border-border focus:border-accent" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="email" className="mb-2 block text-text-primary">
-                    Email *
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="border-2 border-border focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone" className="mb-2 block text-text-primary">
-                    Телефон
-                  </Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="border-2 border-border focus:border-accent"
-                  />
-                </div>
-              </div>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email *</FormLabel>
+                          <FormControl>
+                            <Input type="email" {...field} className="border-2 border-border focus:border-accent" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Телефон</FormLabel>
+                          <FormControl>
+                            <Input type="tel" {...field} className="border-2 border-border focus:border-accent" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Опишите ваши процессы *</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            rows={4}
+                            placeholder="Расскажите о процессах, которые хотите автоматизировать, текущих проблемах и ожидаемых результатах..."
+                            className="resize-none border-2 border-border focus:border-accent"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    disabled={form.formState.isSubmitting}
+                    className="w-full py-3 text-base disabled:opacity-50"
+                  >
+                    {form.formState.isSubmitting ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></div>
+                        <span>Отправляем...</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center space-x-2">
+                        <Send className="h-5 w-5" />
+                        <span>Заказать исследование</span>
+                      </div>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+
+              <Separator className="my-8" />
               <div>
-                <Label htmlFor="description" className="mb-2 block text-text-primary">
-                  Опишите ваши процессы *
-                </Label>
-                <Textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                  rows={4}
-                  placeholder="Расскажите о процессах, которые хотите автоматизировать, текущих проблемах и ожидаемых результатах..."
-                  className="border-2 border-border focus:border-accent resize-none"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full text-base py-3 disabled:opacity-50"
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center space-x-2">
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span>Отправляем...</span>
+                <h3 className="mb-4 text-lg font-semibold text-primary">Контактная информация</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <Mail className="h-5 w-5 text-accent" />
+                    <span className="text-text-secondary">research@processlabs.ru</span>
                   </div>
-                ) : (
-                  <div className="flex items-center space-x-2">
-                    <Send className="w-5 h-5" />
-                    <span>Заказать исследование</span>
+                  <div className="flex items-center space-x-3">
+                    <Phone className="h-5 w-5 text-accent" />
+                    <span className="text-text-secondary">+7 (XXX) XXX-XX-XX</span>
                   </div>
-                )}
-              </Button>
-            </form>
-
-            <Separator className="my-8" />
-            <div>
-              <h3 className="text-lg font-semibold text-primary mb-4">Контактная информация</h3>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-accent" />
-                  <span className="text-text-secondary">research@processlabs.ru</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="w-5 h-5 text-accent" />
-                  <span className="text-text-secondary">+7 (XXX) XXX-XX-XX</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Linkedin className="w-5 h-5 text-accent" />
-                  <span className="text-text-secondary">/company/processlabs</span>
+                  <div className="flex items-center space-x-3">
+                    <Linkedin className="h-5 w-5 text-accent" />
+                    <span className="text-text-secondary">/company/processlabs</span>
+                  </div>
                 </div>
               </div>
-            </div>
             </CardContent>
           </Card>
 
@@ -195,34 +207,15 @@ const ContactSection = () => {
                 <CardTitle className="text-2xl text-white">Процесс исследования</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Анализ заявки</p>
-                    <p className="text-white/80 text-sm">Изучение ваших процессов и задач</p>
+                {contactProcessSteps.map((step, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <CheckCircle className="w-6 h-6 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold">{step.title}</p>
+                      <p className="text-white/80 text-sm">{step.description}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Консультация</p>
-                    <p className="text-white/80 text-sm">30-минутная встреча для обсуждения деталей</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Предложение</p>
-                    <p className="text-white/80 text-sm">Техническое задание и план исследования</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-6 h-6 mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold">Исследование</p>
-                    <p className="text-white/80 text-sm">Разработка и тестирование решения</p>
-                  </div>
-                </div>
+                ))}
               </CardContent>
             </Card>
 
@@ -231,32 +224,16 @@ const ContactSection = () => {
                 <CardTitle className="text-2xl text-primary">Что вы получите</CardTitle>
               </CardHeader>
               <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-text-secondary text-sm">Бесплатная консультация</span>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {contactBenefits.map((benefit, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <div
+                        className={`h-2 w-2 rounded-full ${index % 2 === 0 ? "bg-accent" : "bg-primary"}`}
+                      ></div>
+                      <span className="text-sm text-text-secondary">{benefit}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-text-secondary text-sm">Анализ процессов</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-text-secondary text-sm">ROI расчеты</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-text-secondary text-sm">Техническое решение</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-text-secondary text-sm">Готовый продукт</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-text-secondary text-sm">6 месяцев поддержки</span>
-                </div>
-              </div>
               </CardContent>
             </Card>
 
@@ -265,24 +242,17 @@ const ContactSection = () => {
                 <CardTitle className="text-xl text-primary">Сроки ответа</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-text-secondary">Первичный ответ</span>
-                  <span className="font-semibold text-primary">2 часа</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-text-secondary">Консультация</span>
-                  <span className="font-semibold text-primary">24 часа</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-text-secondary">Техническое предложение</span>
-                  <span className="font-semibold text-primary">3-5 дней</span>
-                </div>
+                {contactResponseTimes.map((item, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <span className="text-text-secondary">{item.label}</span>
+                    <span className="font-semibold text-primary">{item.value}</span>
+                  </div>
+                ))}
               </CardContent>
             </Card>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 

@@ -8,6 +8,7 @@ import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
 import { faqs } from "@/content/landing";
 
 const FAQSection = () => {
@@ -19,8 +20,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-lab">
-      <div className="container mx-auto px-4">
+    <SectionShell sectionClassName="bg-gradient-lab">
         <SectionHeader
           badge="FAQ"
           title="Часто задаваемые вопросы"
@@ -64,8 +64,7 @@ const FAQSection = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 

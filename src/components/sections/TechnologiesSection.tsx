@@ -1,23 +1,11 @@
 import { Database, Bot, Cloud, BarChart3, Brain, Cpu } from "lucide-react";
 import { Badge } from "../ui/badge";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
+import { technologies } from "@/content/landing";
+import { technologyIconMap } from "@/content/icon-map";
 
 const TechnologiesSection = () => {
-  const technologies = [
-    { name: "Python", category: "Backend", icon: Cpu },
-    { name: "OpenAI/Claude", category: "AI", icon: Brain },
-    { name: "amoCRM", category: "CRM", icon: Database },
-    { name: "n8n", category: "Automation", icon: Bot },
-    { name: "PostgreSQL", category: "Database", icon: Database },
-    { name: "Telegram API", category: "Integration", icon: Bot },
-    { name: "React/Next.js", category: "Frontend", icon: Cpu },
-    { name: "Docker", category: "DevOps", icon: Cloud },
-    { name: "AWS", category: "Cloud", icon: Cloud },
-    { name: "Metabase", category: "Analytics", icon: BarChart3 },
-    { name: "Qdrant", category: "Vector DB", icon: Database },
-    { name: "Vector DB", category: "AI/ML", icon: Brain }
-  ];
-
   const categories = {
     "AI": { color: "bg-accent/10 text-accent", icon: Brain },
     "Backend": { color: "bg-primary/10 text-primary", icon: Cpu },
@@ -34,8 +22,7 @@ const TechnologiesSection = () => {
   };
 
   return (
-    <section className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <SectionShell sectionClassName="bg-background">
         <SectionHeader
           title="Наша лаборатория"
           description="Современный стек технологий для создания enterprise-решений"
@@ -47,7 +34,7 @@ const TechnologiesSection = () => {
         {/* Technologies Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 max-w-6xl mx-auto mb-16">
           {technologies.map((tech, index) => {
-            const IconComponent = tech.icon;
+            const IconComponent = technologyIconMap[tech.icon];
             const categoryStyle = categories[tech.category];
             
             return (
@@ -126,8 +113,7 @@ const TechnologiesSection = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 

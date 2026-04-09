@@ -1,10 +1,16 @@
-import { Users, Award, Code, Zap } from "lucide-react";
+import { Users } from "lucide-react";
 import SectionHeader from "../shared/SectionHeader";
+import SectionShell from "../shared/SectionShell";
+import {
+  teamMetrics,
+  teamPhilosophy,
+  teamScientificApproach,
+} from "@/content/landing";
+import { teamMetricIconMap } from "@/content/icon-map";
 
 const TeamSection = () => {
   return (
-    <section className="py-20 bg-gradient-lab">
-      <div className="container mx-auto px-4">
+    <SectionShell sectionClassName="bg-gradient-lab">
         <SectionHeader
           title="Команда исследователей"
           description="Эксперты в области AI/ML и промышленной автоматизации"
@@ -29,41 +35,22 @@ const TeamSection = () => {
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Award className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-text-primary">10+ лет R&D</p>
-                        <p className="text-text-secondary text-sm">в автоматизации</p>
+                  {teamMetrics.map((metric, index) => {
+                    const IconComponent = teamMetricIconMap[metric.icon];
+                    return (
+                      <div key={index} className="flex items-start space-x-3">
+                        <IconComponent
+                          className={`mt-1 h-5 w-5 flex-shrink-0 ${
+                            metric.color === "accent" ? "text-accent" : "text-primary"
+                          }`}
+                        />
+                        <div>
+                          <p className="font-semibold text-text-primary">{metric.title}</p>
+                          <p className="text-text-secondary text-sm">{metric.subtitle}</p>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="flex items-start space-x-3">
-                      <Code className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-text-primary">Эксперт AI/ML</p>
-                        <p className="text-text-secondary text-sm">интеграций</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Zap className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-text-primary">20+ решений</p>
-                        <p className="text-text-secondary text-sm">внедрено</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start space-x-3">
-                      <Users className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                      <div>
-                        <p className="font-semibold text-text-primary">Специализация</p>
-                        <p className="text-text-secondary text-sm">промышленная автоматизация</p>
-                      </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -72,19 +59,13 @@ const TeamSection = () => {
           {/* Research Philosophy */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-card rounded-xl shadow-lab-md p-6">
-              <h4 className="text-xl font-bold text-primary mb-4">Философия исследований</h4>
-              <p className="text-text-secondary leading-relaxed">
-                "Каждая задача автоматизации уникальна. Мы не адаптируем готовые решения — 
-                создаем новые с нуля, основываясь на глубоком понимании бизнес-процессов."
-              </p>
+              <h4 className="text-xl font-bold text-primary mb-4">{teamPhilosophy.title}</h4>
+              <p className="text-text-secondary leading-relaxed">"{teamPhilosophy.text}"</p>
             </div>
             
             <div className="bg-card rounded-xl shadow-lab-md p-6">
-              <h4 className="text-xl font-bold text-primary mb-4">Научный подход</h4>
-              <p className="text-text-secondary leading-relaxed">
-                "Применяем методы научного исследования: гипотезы, эксперименты, 
-                статистическая значимость результатов и peer-review каждого решения."
-              </p>
+              <h4 className="text-xl font-bold text-primary mb-4">{teamScientificApproach.title}</h4>
+              <p className="text-text-secondary leading-relaxed">"{teamScientificApproach.text}"</p>
             </div>
           </div>
 
@@ -99,8 +80,7 @@ const TeamSection = () => {
             </p>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 
