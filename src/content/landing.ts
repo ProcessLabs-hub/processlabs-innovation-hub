@@ -268,3 +268,110 @@ export const contactResponseTimes: ContactResponseTime[] = [
   { label: "Консультация", value: "24 часа" },
   { label: "Техническое предложение", value: "3-5 дней" },
 ];
+
+export interface ImplementedProject {
+  name: string;
+  domain: string;
+  summary: string;
+  stack: string[];
+  highlights: string[];
+}
+
+export const implementedProjects: ImplementedProject[] = [
+  {
+    name: "ProcessMeter",
+    domain: "HR / Process Analytics",
+    summary:
+      "Система хронометража и оценки трудозатрат сотрудников по бизнес-процессам с встроенной аналитикой и эталонными справочниками.",
+    stack: ["Node.js", "Fastify", "PostgreSQL", "React", "shadcn/ui"],
+    highlights: [
+      "JWT-авторизация и роли",
+      "Email-приглашения и сброс пароля",
+      "Синхронизация с эталонной БД",
+    ],
+  },
+  {
+    name: "EcoLMS",
+    domain: "EdTech / Internal LMS",
+    summary:
+      "Внутренний инструмент подготовки обучающих курсов из видео и документов с поэтапной генерацией материалов и ручной валидацией этапов.",
+    stack: ["Next.js", "NestJS", "PostgreSQL", "Redis", "S3", "Whisper"],
+    highlights: [
+      "Multipart upload в S3",
+      "Пайплайн из 4 этапов контента",
+      "Очереди и отдельные worker-сервисы",
+    ],
+  },
+  {
+    name: "Ecookna QualAnalize",
+    domain: "Production QA / PDF Validation",
+    summary:
+      "Автоматическая проверка PDF-заказов на соответствие техправилам и нормам слипаемости с выдачей детального отчета.",
+    stack: ["Python", "PostgreSQL", "React", "Telegram Bot API", "Directus"],
+    highlights: [
+      "Гибрид: Python + SQL-процедуры",
+      "Детерминированные проверки формул",
+      "Отчеты по ошибкам и предупреждениям",
+    ],
+  },
+  {
+    name: "ecookna-crm-analytics_clone",
+    domain: "CRM Analytics UI",
+    summary:
+      "Веб-интерфейс аналитики CRM на React/Vite с компонентной архитектурой shadcn/ui для операционного мониторинга.",
+    stack: ["React", "Vite", "TypeScript", "Tailwind CSS", "shadcn/ui"],
+    highlights: [
+      "Frontend-ориентированная архитектура",
+      "Компонентный UI-подход",
+      "База для аналитических дашбордов",
+    ],
+  },
+  {
+    name: "Lead-magnet",
+    domain: "Marketing Automation / Telegram",
+    summary:
+      "Система генерации лидов в Telegram с deep-link кампаниями, проверкой подписки и маршрутизацией лидов в CRM/Email.",
+    stack: ["FastAPI", "Aiogram", "PostgreSQL", "Redis", "React", "shadcn/ui"],
+    highlights: [
+      "FSM-сбор контактных данных",
+      "Интеграции EcoCRM / Bitrix24 / Email",
+      "Админ-панель управления кампаниями",
+    ],
+  },
+  {
+    name: "Mobiblisation (postgres edition)",
+    domain: "Gov / Internal Operations",
+    summary:
+      "Монорепо приложения учета мобилизации: справочники, события, отчеты, импорт Excel и интеграция с Power Query.",
+    stack: ["NestJS", "Next.js", "PostgreSQL", "shadcn/ui", "pnpm workspace"],
+    highlights: [
+      "Единая схема данных в PostgreSQL",
+      "Отчетные API и журналы аудита",
+      "Импорт Excel с валидацией",
+    ],
+  },
+  {
+    name: "Legitum Translator",
+    domain: "Integration / Automation",
+    summary:
+      "Интеграционный контур переводческих workflow на базе n8n с удаленным развертыванием через Railway.",
+    stack: ["n8n", "Railway", "MCP connector"],
+    highlights: [
+      "Подключение внешнего n8n-инстанса",
+      "Интеграция в автоматизационные сценарии",
+      "База для переводческих пайплайнов",
+    ],
+  },
+  {
+    name: "Wellmaker Content Generator",
+    domain: "Healthcare Content",
+    summary:
+      "Внутренний генератор контент-планов для медицинских клиентов с очередями генерации, календарем и экспортом в документы.",
+    stack: ["Next.js 14", "PocketBase", "Redis", "OpenAI/Gemini/DeepSeek", "Tailwind CSS"],
+    highlights: [
+      "Асинхронная генерация через jobs",
+      "Экспорт в Excel/Word/PDF",
+      "Управление календарем и постами",
+    ],
+  },
+];
